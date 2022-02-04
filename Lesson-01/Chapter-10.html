@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter-10 Webブラウザーのオブジェクト</title>
+</head>
+<body>
+    <!-- window.print()で印刷ダイアログを表示できる。 -->
+    <p>
+        <!-- return false;を指定することで、リンクをクリックした時、ページを遷移させないためのもの。これを入れておくと「href="#"」が無視される。 -->
+        このページを[<a href="#" onclick="window.print(); return false;">印刷</a>]することができます
+    </p>
+    <form>
+        <button onclick="window.print();">印刷</button>
+    </form>
+
+
+    <p><button id="clickPrint">印刷</button></p>
+    <script>
+        // HTMLページのレンダリングが終わってから（読み込みが完了してから）JavaScriptのコードを実行させるためにWindowオブジェクトのonloadイベントハンドラを使用
+        window.onload = load;
+
+        // ボタンをクリックすると「指定された関数を実行」させるためにgetElementById()メソッドを使用する。
+        // このメソッドはHTML要素で指定した「id属性」にマッチするドキュメント要素を取得するElementオブジェクトのメソッド
+        // 「button id="clickPrint"」のid名と一致すれば、関数が実行される仕組みになっている。
+        function load() {
+            document.getElementById('clickPrint').onclick = clickPrint;
+        }
+        function clickPrint() {
+            print();
+        }
+    </script>
+
+    <!-- カウンターを表示
+    getElementByIdメソッドの応用
+    HTML要素で指定した「id属性」にマッチするドキュメント要素を取得して、id名timerのdiv要素に現在の時刻を出力する。
+    setInterval()メソッドを使用して、1秒ごとに実行させる。 -->
+    <div id="timer"></div>
+    <script>
+        window.setInterval( function() {
+            document.getElementById('timer').innerHTML = new Date().toLocaleString();
+        }, 1000);
+    </script>
+
+    <!-- イベントとイベントハンドラを関連づけるには、HTMLの中で要素の属性に指定する方法と要素のプロパティに指定する方法がある。
+    ・<要素名 イベントハンドラ名＝"実行したい関数名();"></要素名>
+    ・オブジェクト名「.(ドット)」イベントハンドラ名=実行したい関数名 -->
+
+    <!-- 要素の属性に指定する方法 -->
+    <input type="button" value="このボタンをクリック!" onclick="btnClick();">
+    <script>
+        function btnClick() {
+            console.log('イベントが発生しました!');
+        }
+    </script>
+
+    <!-- 要素のプロパティに指定する方法 -->
+    <input id="btn-click" type="button" value="このボタンをクリック!!">
+    <script>
+        let message = document.getElementById('btn-click');
+        message.onclick = function() {
+            console.log('イベントが発生しました');
+        }
+    </script>
+
+
+    <!-- イベントリスナーでイベントを設定する
+
+    イベントの設定方法には、HTMLの中で要素の属性に指定する方法と要素のプロパティに指定する方法がありますが、
+    これらは1つの要素やイベントに対して複数のイベントハンドラを設定することができない。
+    複数のイベントハンドラを設定したい場合は、イベントリスナー方式が用意されている。
+    具体的には、addEventListenerメソッドを使用する。 -->
+    <input id="btn-click2" type="button" value="このボタンをクリック!!!">
+    <script>
+        window.onload = function() {
+            let message = document.getElementById('btn-click2');
+            message.addEventListener('click', function() {
+                console.log('イベントが発生しました!!');
+            });
+            message.addEventListener('click', function() {
+                alert('ボタンをクリックしましたね');
+            });
+        }
+    </script>
+
+    <!-- onloadというイベントハンドラを使用しているが、window.onloadを記述することで、ページの「読み込み完了後」にスクリプトが実行されるようになる。
+    例えば、HTMLのhead要素内でスクリプトを読み込むと、読み込み完了後にHTMLのレンダリングが開始される（ページが表示される）。
+    もし、DOMを操作するスクリプトだったら、ページが表示される前に、スクリプトが実行されるためエラーになってしまう。
+    body要素内の一番下に記述すると、HTMLのレンダリングが開始され、ページの表示が先になるが、一番下に記述してもページ読み込みが完了してからスクリプトが実行される保証はない。
+    window.onloadを使用すれば、ページの読み込み完了後にスクリプトが実行されるようになる。 -->
+
+    <!-- XMLHttpRequest
+    非同期データの通信（Ajax）を実現するためのAPIが「XMLHttpRequest」。
+    ページ更新しなくても最新のデータを受け取ることができる。
+    XMLHttpRequestオブジェクトでサーバーとやり取りすることで、ページ全体を更新することなく、データを取得して「ページ内の一部」に表示することができる。
+    以下は写真作品と撮影者の名前、作品キャプションの3つデータをサーバーから取得して動的に表示するプログラム。 -->
+
+    <!-- 以下のコードで本の会社が用意したJSONファイルを使用して、画像の表示ができるが
+    CORSエラーでできない。 相手側のJSONサーバー側でheaderを返せばいいみたいだが、、、
+    <style>
+        h1 {
+            font-size: 1.2em;
+            margin-bottom: 0;
+        }
+        .container {
+            padding: 2em;
+        }
+        p {
+            margin-top: 0;
+        }
+        img {
+            width: 50%;
+        }
+    </style>
+    <header>
+        <h1>Photo Library</h1>
+        <div class="container">
+            <div id="img_unit"></div>
+        </div>
+    </header>
+    <script>
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'http://design-zero.tv/scc-sample/data.json');
+        ajax.responseType = 'json';
+        ajax.send(null);
+        ajax.onreadystatechange = function() {
+            if (ajax.readyState === XMLHttpRequest.DONE && ajax.status === 200) {
+                for (let i = 0; i < this.response.length; i++) {
+                    let data = this.response[i];
+                    let img = document.createElement('img');
+                    img.setAttribute('src', data.path);
+                    let caption = document.createElement('div');
+                    caption.className = 'inner';
+                    caption.innerHTML = '<p>' + data.caption + '-' + data.name + '</p>';
+                    let div = document.createElement('div');
+                    div.className = 'photo';
+                    div.appendChild(img);
+                    div.appendChild(caption);
+                    document.getElementById('img_unit').appendChild(div);
+                }
+            }
+        };
+    </script> -->
+
+    <p></p>
+
+    <!-- Chapter-10練習問題 -->
+    <!-- 以下のコードを入力してブラウザーで確認してください。ページには「新製品について質問をしたい!」というボタンが1つ表示される。
+    スクリプトを追加して、「ボタンをクリックすると入力ボックスと送信ボタンが表示される」プログラムを作成してください。
+    複数行の入力ボックスと送信ボタンはすでに記述されていますが、CSSの「display: none;」で消しています。 -->
+    <!-- <style>
+        body {
+            padding: 2em;
+        }
+        #form {
+            display: none;
+        }
+        input {
+            margin-bottom: 2em;
+        }
+        form p {
+            margin: 0;
+        }
+    </style>
+    <input id="btn-click3" type="button" value="新製品について質問したい!">
+    <form action="" id="form">
+        <p><textarea id="textarea" name="textarea" cols="60" rows="8"></textarea></p>
+        <p><input id="submit" type="submit" value="質問を送信する"></p>
+    </form> -->
+
+    <style>
+        body {
+            padding: 2em;
+        }
+        #form {
+            display: none;
+        }
+        input {
+            margin-bottom: 2em;
+        }
+        form p {
+            margin: 0;
+        }
+    </style>
+    <input id="btn-click3" type="button" value="新製品について質問したい!">
+    <form action="" id="form">
+        <p><textarea id="textarea" name="textarea" cols="60" rows="8"></textarea></p>
+        <p><input id="submit" type="submit" value="質問を送信する"></p>
+    </form>
+    <script>
+
+        // form要素を取得
+        let form = document.getElementById('form');
+        let btn = document.getElementById('btn-click3');
+
+        // ボタンが押されたらイベント発火
+        btn.onclick = function() {
+            form.style.display = "block";
+        }
+    </script>
+
+</body>
+</html>

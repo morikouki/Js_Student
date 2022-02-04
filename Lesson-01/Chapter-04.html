@@ -1,0 +1,48 @@
+<!-- Chapter4の練習問題
+降水確率によって条件分岐するプログラムを考えてみましょう。
+if/else文で記述されたサンプルを、swith分を使用して書き換えてください。
+ここでは仮に、20%未満ではれ、60%以上で雨、20%以上60%未満で曇りとしてる。
+※降水確率は「何%の確率で雨が降るか」と言うことではなく、60%なら「（対象地域の過去の信度が70%で、香水があるエリアが対象地域の全体の80%なら降水確率は60%になりますが、
+このプログラムには反映しない。 -->
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter4の練習問題</title>
+</head>
+<body>
+    <!-- サンプル -->
+    <script>
+        let rainfall = 60;
+        if (rainfall < 20) {
+            console.log('明日の予報は晴れです');
+        } else if (20 <= rainfall && rainfall < 60) {
+            console.log('明日の予報は曇りです');
+        } else {
+            console.log('明日の予報は雨です');
+        }
+    </script>
+
+    <!-- 回答 -->
+    <!-- switch文は、一致してるかどうかの判定しかできないので上記の通りにはいかない。
+    考え方を変える -->
+    <script>
+        let yohou = '晴れ';
+        switch(yohou) {
+            case '晴れ':
+                console.log('明日の予報は晴れです');
+                break;
+            case '曇り':
+                console.log('明日の予報は曇りです');
+                break;
+            default:
+                console.log('明日の予報は雨です');
+                break;
+        }
+    </script>
+</body>
+</html>

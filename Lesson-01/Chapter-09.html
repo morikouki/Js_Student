@@ -1,0 +1,91 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter-09 DOMの操作</title>
+</head>
+<body>
+    <p id="timeOfDay">只今の時刻</p>
+    <input type="button" value="時刻に書き換える" onclick="showDay();">
+
+    <!-- DOM操作
+    現在の時刻情報を取得してp要素内の文字列を書き換える -->
+    <script>
+        function showDay() {
+
+            // getElementById()では、id名を指定した要素を取得できる
+            let timeOfDay = document.getElementById('timeOfDay'); // id名で要素を取得
+            console.log(timeOfDay); // コンソールに取得した要素を表示
+
+            // p要素の文字列だけを取得したい場合は、innerTextプロパティを使用する
+            console.log(timeOfDay.innerText);
+
+            // toLocalStringメソッドを使用して、言語に対応した日時の文字列にする。
+            let nowDate = new Date();
+            timeOfDay.innerText = nowDate.toLocaleDateString(); // 言語に合わせた日時にして表示
+        }
+    </script>
+
+    <!-- リストの項目を動的に追加する -->
+    <ul id="list"></ul>
+    <input type="button" value="項目を追加する" onclick="appendItem();">
+
+    <!-- リストの項目を動的に削除する -->
+    <input type="button" value="項目を削除する" onclick="removeItem()">
+
+    <script>
+        // リストの項目を追加
+        // reateElementメソッドでli要素を生成し、createTextNodeメソッドでテキストノードを追加する。
+        // appendChildメソッドで生成したli要素内にテキストノードを追加して、getElementByIdメソッドで要素を取得、同じくappendChildメソッドを使って、
+        // ul要素内に文字列を含むli要素を追加する
+        function appendItem() {
+            let li = document.createElement('li'); // li要素の生成
+            let text = document.createTextNode('新しい商品アイテム'); // テキストノードの生成
+            li.appendChild(text); // li要素内にテキストノードの追加
+            let list = document.getElementById('list'); // id名がlistの要素を取得
+            list.appendChild(li); // ul要素内に文字列が入ったli要素を追加
+        }
+
+        // リストの項目を削除
+        function removeItem() {
+            let parentElement = document.getElementById('list'); // ul要素のを取得
+            let lists = parentElement.getElementsByTagName('li'); // ul要素内のli要素を取得
+            let removeIndex = lists.length - 1; // li要素を１行ずつ削除。配列は0から始まるので「1」を引く
+            parentElement.removeChild(lists[removeIndex]);
+
+        }
+    </script>
+
+
+    <!-- Chapter-09練習問題
+    スクリプトを追加して、中身出しの「ドキュメント」を「documentオブジェクト」に書き換えてください。
+    また、書き換えた中見出しの文字色を「青」に変更してみましょう。 -->
+    <!--
+        <h1>Windowオブジェクト</h1>
+        <h2 id="subheading">ドキュメント</h2>
+        <h3>getElementById()メソッド</h3>
+        <p>指定したid名の文字列に一致するドキュメント要素を取得します。特定の要素に素早くアクセスすることができます。</p>
+        <script>
+            console.log(document);
+        </script>
+    -->
+
+    <h1>Windowオブジェクト</h1>
+    <h2 id="subheading">ドキュメント</h2>
+    <h3>getElementById()メソッド</h3>
+    <p>指定したid名の文字列に一致するドキュメント要素を取得します。特定の要素に素早くアクセスすることができます。</p>
+    <script>
+        console.log(document);
+        let subheading = document.getElementById('subheading');
+        subheading.innerText = 'documentオブジェクト';
+        subheading.style.color = 'blue';
+    </script>
+
+
+</body>
+</html>

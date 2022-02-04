@@ -1,0 +1,44 @@
+<!--
+Chapter-08の練習問題
+入力ダイアログを表示して数値を入力させ、整数かどうかを判定するプログラムを完成させてください。
+以下のコードを実行すると、入力ダイアログが表示されますが、その後の処理が記述されていません。
+入力されて数値を判定して、整数なら「整数です」、整数でない場合は「整数ではありません」とアラートで表示してください -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter8の練習問題</title>
+</head>
+<body>
+    <script>
+        let inputNum;
+        inputNum = prompt('数を入力してください');
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter8の練習問題</title>
+</head>
+<body>
+    <script>
+        let inputNum;
+        inputNum = prompt('数を入力してください');
+        let num = parseFloat(inputNum);
+        if (Number.isInteger(num)){
+            alert('整数です');
+        } else {
+            alert('整数ではありません');
+        }
+    </script>
+</body>
+</html>

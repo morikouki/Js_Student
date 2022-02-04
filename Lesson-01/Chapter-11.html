@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter-11 jQuery</title>
+
+    <!-- bxSliderを使用する記述 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+</head>
+<body>
+    <ul class="evenum">
+        <li>List Item 01（奇数行）</li>
+        <li>List Item 02（偶数行）</li>
+        <li>List Item 03（奇数行）</li>
+        <li>List Item 04（偶数行）</li>
+        <li>List Item 05（奇数行）</li>
+        <li>List Item 06（偶数行）</li>
+        <li>List Item 07（奇数行）</li>
+        <li>List Item 08（偶数行）</li>
+    </ul>
+
+    <!-- JavaScriptの通常の書き方で偶数列の色を変更 -->
+    <script>
+        let children = document.querySelector('.evenum').children
+        for (let i = 0; i < children.length; i++) {
+            let child = children[i];
+            if (i % 2) {
+                child.style.color = '#09f';
+            }
+        }
+    </script>
+
+    <!-- 上記の処理をjQueryでリファクタリングした処理 -->
+    <script>
+        $('.evenum li:nth-child(even)').css('color', '#09f');
+    </script>
+
+    <div class="container">
+        <h1>Hello, world!!</h1>
+    </div>
+    <script>
+        $('.container').css('color', '#08e');
+    </script>
+
+    <!-- bxSliderを使用してスライドショーの作成 -->
+    <div class="container2">
+        <ul class="bxslider">
+            <li><img src="img/photo-01.jpg" title="旅"></li>
+            <li><img src="img/photo-02.jpg" title="飛行機"></li>
+            <li><img src="img/photo-03.jpg" title="飛行"></li>
+        </ul>
+    </div>
+    <script>
+        $(document).ready(function(){
+          $('.slider').bxSlider();
+        });
+        $(function(){
+            $('.bxslider').bxSlider({
+                mode: 'fade',
+                captions: true,
+                slideWidth: 600
+            });
+        });
+      </script>
+
+      <!-- Chapter-11の練習問題
+      テキストにマウスポインターを合わせると、テキストの背景色が変更されるプログラムを完成させてください。
+      h1要素でマークアップされたタイトル「Hello, World!」にマウスポインターを重ねると、タイトル領域の背景色が白から薄い青の変わる仕組みです。
+      以下のプログラムは未完成ですが、数箇所だけ記述を追加すれば正しく動作します。 -->
+      <!-- <style>
+          .container3 {
+              display: inline-block;
+          }
+          .container3 h1 {
+              padding: 0.6em;
+          }
+      </style>
+      <div class="container3">
+          <h1>Hello, World!</h1>
+      </div>
+      <script>
+          $(function() {
+              $().mouseover(function() {
+                  $().css('background-color', '#9bf');
+              }).mouseout(function() {
+                  $().css('background-color', '')
+              });
+          });
+      </script> -->
+       <style>
+            .container3 {
+                display: inline-block;
+            }
+            .container3 h1 {
+                padding: 0.6em;
+            }
+        </style>
+        <div class="container3">
+            <h1>Hello, World!</h1>
+        </div>
+        <script>
+            $(function() {
+                $('.container3').mouseover(function() {
+                    $('.container3 h1').css('background-color', '#9bf');
+                }).mouseout(function() {
+                    $('.container3 h1').css('background-color', '#fff')
+                });
+            });
+        </script>
+</body>
+</html>

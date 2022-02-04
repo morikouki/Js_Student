@@ -1,0 +1,39 @@
+<!-- Chapter6の練習問題
+Webブラウザーで開くと4人の名前がリスト表示されるプログラムを書いてください。
+以下のコードに必要な記述を追加してください。
+↓ブラウザーの表示結果
+・山田太郎
+・鈴木一郎
+・高橋五郎
+・田中愛子 -->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter6の練習問題</title>
+</head>
+<body>
+    <!-- 下記のコードを改修
+    <ul></ul>
+    <script>
+        let html = '';
+        team.forEach(function (team) {
+            html += '<li>' + team + '</li>';
+        });
+        document.querySelector('ul').innerHTML = html;
+    </script> -->
+
+    <ul></ul>
+    <script>
+        let team = new Array("山田太郎", "鈴木一郎", "高橋五郎", "田中愛子");
+        let html = '';
+        team.forEach(function (team) {
+            html += '<li>' + team + '</li>';
+        });
+        document.querySelector('ul').innerHTML = html;
+    </script>
+</body>
+</html>

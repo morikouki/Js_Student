@@ -1,0 +1,88 @@
+<!-- Chapter7の練習問題
+「スタート/ストップ」ボタン付きのカウンタープログラムを完成させてください。
+「START」ボタンをクリックすると、カウントを開始し、「STOP」ボタンをクリックすると一時停止する機能になります。
+以下のプログラムは未完成で正しく動作しませんが、コードを1行ごと見ていけば、何が足りないのか気づくはずです。
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter-07の練習問題</title>
+    <style>
+        body {
+            padding: 2em;
+        }
+        p#counter {
+            font-size: 2em;
+            font-weight: bold;
+            text-indent: 1.2em;
+            color: #09f;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="startCounter()">START</button>
+    <button onclick="stopCounter()">STOP</button>
+    <p id="counter"></p>
+    <script>
+        let countId = NaN, count = 0;
+        function {
+            countId = setInterval (ticktack, 1000);
+        }
+        function {
+            clearInterval (countId);
+        }
+        function {
+            count++;
+            document.getElementById('counter').textContent = count;
+        }
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter-07の練習問題</title>
+    <style>
+        body {
+            padding: 2em;
+        }
+        p#counter {
+            font-size: 2em;
+            font-weight: bold;
+            text-indent: 1.2em;
+            color: #09f;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="startCounter()">START</button>
+    <button onclick="stopCounter()">STOP</button>
+    <p id="counter"></p>
+    <script>
+        let countId = NaN, count = 0;
+        function startCounter() {
+
+            // 指定した時間ごとに処理を実行する関数「setInterval」
+            // setTimeoutでは第1引数に指定した時間が経過した後に実行される処理、第2引数に経過時間をミリ秒で指定する。
+            countId = setInterval(ticktack, 1000);
+
+        }
+        function stopCounter() {
+
+            // 「setInterval」で設定したタイマーを取り消す
+            // clearIntervalでも第1引数に取り消したいタイマー処理を設定したsetIntervalの戻り値を指定する。
+            clearInterval(countId);
+        }
+        function ticktack() {
+            count++;
+            document.getElementById('counter').textContent = count;
+        }
+    </script>
+</body>
+</html>
