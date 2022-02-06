@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter-12 Vuejsを使う</title>
+
+    <!-- 文字を右回転させるのに使用している CSSアニメーションライブラリ -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+  />
+</head>
+<body>
+    <style>
+        body {
+            padding: 2em;
+        }
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .8s;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active belew version 2.1.8 */{
+            opacity: 0;
+        }
+
+        .bounce-enter-active {
+            animation: bounce-in .5s;
+        }
+        .bounce-leave-active {
+            animation: bouce-in .5s reverse;
+        }
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+    <!-- Vue.jsでメッセージ表示 -->
+    <div id="app">
+        {{message}}
+    </div>
+
+    <!-- クリックすると文字が消える -->
+    <div id="fade-demo">
+        <button v-on:click="show = !show">
+            フェードイン・アウト
+        </button>
+        <transition name="fade">
+            <h1 v-if="show">Hello, world!</h1>
+        </transition>
+    </div>
+
+    <!-- クリックすると文字が拡大する -->
+    <div id="zoom-example">
+        <button @click="show = !show">ズームイン・アウト</button>
+        <transition name="bounce">
+            <p v-if="show">Vue.jsを使えば、自動的にCSSトランジションやアニメーション効果のためのクラスを適用してくれますので、簡単にモーションデザインを試すことができる。</p>
+        </transition>
+    </div>
+
+    <!-- クリックすると文字が右回転する -->
+    <div id="rotate-in-Out">
+        <button @click="show = !show">
+            回転アニメーション効果
+        </button>
+        <transition
+            name="custom-classes-transition"
+            enter-active-class="animated rotateIn faster"
+            leave-active-class="animated rotateOut slow">
+            <p v-if="show">右端を軸に回転</p>
+        </transition>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+    <!-- メッセージ表示 -->
+    <script>
+        // Vueのインスタンス化
+        let app = new Vue({
+            // 「el」オプションを使用してid名=appを指定
+            el: '#app',
+            // dataプロパティは、「data: {キー: 値}」のような構文になっている
+            data: {
+                message: 'Hello Vue!'
+            }
+        })
+    </script>
+
+    <!-- 文字を消す（フェードアウト） -->
+    <script>
+        new Vue({
+            el: '#fade-demo',
+            data: {
+                show: true
+            }
+        })
+    </script>
+
+    <!-- 文字のズーム -->
+    <script>
+        new Vue({
+            el: '#zoom-example',
+            data: {
+                show: true
+            }
+        })
+    </script>
+
+    <!-- 文字を右回転させる -->
+    <script>
+        new Vue({
+            el: '#rotate-in-Out',
+            data: {
+                show: true
+            }
+        })
+    </script>
+</body>
+</html>
